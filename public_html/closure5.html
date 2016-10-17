@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        
+        <script type="text/javascript">
+            
+            /* 
+* Fix the loop with a closure so the console will display the correct value 
+* you can move/add code if you need to(hint hint)
+*/ 
+ var myVar = 0;
+function add(a){
+            setTimeout(function(){ 
+            console.log( 'The Value of a is = ', a); 
+        }, 100);
+}
+
+for ( var a = 0; a < 5; a++ ) { 
+            
+    add(a);
+}
+
+
+
+            </script>
+    </body>
+</html>
