@@ -102,6 +102,7 @@
                 var callback2 = {
                 success: function(data) {
                 console.log(1, 'success', data);
+                document.querySelector("figure").innerHTML = "";
                 displayPic(data.picture);
                 docfrag.appendChild( createParagraphElement('Full Name: ', data.name.first + " " + data.name.last) );
                 docfrag.appendChild( createParagraphElement('Company: ', data.company) );
@@ -140,6 +141,7 @@
             }//end createParagraphElement
             
             function displayPic(image) {
+                
                 var imageTag;
                 dom = document.querySelector('figure');
                 //if(imageTag && typeof imageTag !== 'undefined' ){
