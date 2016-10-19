@@ -57,9 +57,8 @@
            
            //function to display the list of names in the JSON Object
            displayList('ul.users', json.users);
-       }    
-       
-       
+       }//end getData    
+        
         function displayList(selector, list) {
                 var dom = document.querySelector(selector);
                 /* this document fragment is just for performance 
@@ -75,7 +74,7 @@
                 for(var i=0; i< list.length; i++){
                     /* you can use the creaeElement tag to create any HTML element you want */
                     var li = document.createElement("li");            
-                    li.textContent = list[i].name.first;
+                    li.textContent = list[i].name.first + " " + list[i].name.last;
                     //console.log(list[i]);
                     /* you can set any attribute using the function below for any Created element */
                     li.setAttribute('class', 'link');
@@ -86,9 +85,9 @@
                 
                 /* after the fragment is completed we can add it to the page */
                 dom.appendChild(docfrag);
-            }
+            }//end displayList
             
-             function displayContent(selector, item) {
+            function displayContent(selector, item) {
                 var dom = document.querySelector(selector);
                 var docfrag = document.createDocumentFragment();
                 
@@ -97,13 +96,35 @@
                     dom.removeChild(dom.firstChild);
                 }   
                 
+                //make request to get individual user data
+                var id = item._id + ".json";
                 
-                docfrag.appendChild( createParagraphElement('ID: ', item._id) );
-                docfrag.appendChild( createParagraphElement('First Name: ', item.name.first) );
-                docfrag.appendChild( createParagraphElement('Last Name: ', item.name.last) );
-                 
+                var callback2 = {
+                success: function(data) {
+                console.log(1, 'success', data);
+                displayPic(data.picture);
+                docfrag.appendChild( createParagraphElement('Full Name: ', data.name.first + " " + data.name.last) );
+                docfrag.appendChild( createParagraphElement('Company: ', data.company) );
+                docfrag.appendChild( createParagraphElement('Email: ', data.email) );
+                docfrag.appendChild( createParagraphElement('Phone: ', data.phone) );
+                docfrag.appendChild( createParagraphElement('Address: ', data.address) );
+                docfrag.appendChild( createParagraphElement('Registered: ', data.registered) );
+                docfrag.appendChild( createParagraphElement('Age: ', data.age) );
+                docfrag.appendChild( createParagraphElement('Eye Color: ', data.eyeColor) );
+                docfrag.appendChild( createParagraphElement('Greeting: ', data.greeting) );
+                docfrag.appendChild( createParagraphElement('Favorite Fruit: ', data.favoriteFruit) );
+                docfrag.appendChild( createParagraphElement('Balance: ', data.balance) );
+                docfrag.appendChild( createParagraphElement('About: ', data.about) );
                 dom.appendChild(docfrag);
-            }
+                },
+                error: function(data) {
+                  console.log(2, 'error', data);
+                }
+                };
+                
+                makeRequest('data/' + id).then(callback2.success, callback2.error);
+               
+            }//end displayContent
             
              /* custom function to generate a template for our view */
             function createParagraphElement(label, text) {
@@ -116,6 +137,16 @@
                     pTag.appendChild(strongTag);  
                     pTag.appendChild(pText);  
                     return pTag;
+            }//end createParagraphElement
+            
+            function displayPic(image) {
+                var imageTag;
+                dom = document.querySelector('figure');
+                //if(imageTag && typeof imageTag !== 'undefined' ){
+                   imageTag = document.createElement('img');
+                //}
+                imageTag.src = "img/" + image;
+                dom.appendChild(imageTag);
             }
             
               
