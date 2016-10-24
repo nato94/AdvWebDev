@@ -20,11 +20,11 @@ and open the template in the editor.
 function outerRun(){ 
   function innerRun(){ 
     console.log( a === 7, 'What is the value of a.' ); 
-    console.log( b === 8, 'What is the value of b.' ); 
+    console.log( b === undefined, 'What is the value of b.' ); 
   }
   var a = 7; 
+  innerRun();
   var b = 8; 
-  innerRun(); 
   
 } 
 outerRun();
