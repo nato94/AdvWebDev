@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Assignment 3 - Home Page</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="data"><!--Data goes here --> </div>
+        
+        <script type="text/javascript" >
+            function makeRequest(url){
+                var promise = new Promise( httpPromise);
+                    function httpPromise(resolve, reject){
+                        var httpRequest = new XMLHttpRequest();
+                        if( !httpRequest){
+                            reject('Cannot create an XMLHTTP instance');
+                        }
+                         httpRequest.open('GET',url);
+                         httpRequest.send();
+                         httpRequest.addEventListener('load', httpResolve.bind(httpRequest));
+                         httpRequest.addEventListener('error', httpReject.bind(httpRequest));
+                        function httpResolve(){
+                            if(this.status >= 200 && this.status < 300){
+                              resolve(JSON.parse(this.response));
+                            }
+                            else(
+                                reject(this.statusText));
+                        }
+                        function httpReject(){
+                            reject(this.statusText);
+                        }
+                    }
+                   return promise;         
+                }//end makeRequest
+                
+            var callback = {
+              success: function(data) {
+                  getList(data);
+              },
+              error: function(data) {
+                console.log(2, 'error', data);
+              }
+            };//end callback
+            
+            //function to create paragraph element
+            function createParagraphElement(label, text) {
+                var pTag = document.createElement('p'),
+                    strongTag = document.createElement('strong'),
+                    strongText = document.createTextNode(label),
+                    pText = document.createTextNode(text);
+          
+                    strongTag.appendChild(strongText);
+                    pTag.appendChild(strongTag);  
+                    pTag.appendChild(pText);  
+                    return pTag;
+            }//end createParagraphElement
+           
+            function getList(data){
+                var dom = document.querySelector('div.data');
+                //create document frag to append data to
+                var docfrag = document.createDocumentFragment();
+                //run a for loop to append the titles
+                for(var i=0; i <data.length; i++){
+                    docfrag.appendChild(createParagraphElement("Title: ",data[i].title));
+                }
+                //add all the titles
+                dom.appendChild(docfrag);
+            }//end getList
+            
+            //load the url to make the Ajax call
+        makeRequest('http://localhost:3000/todo').then(callback.success, callback.error);  
+        </script>
+
+ 
+    </body>
+</html>
