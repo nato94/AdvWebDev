@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    h1=title
+
+ul
+        li
+            a(href="./") Home
+        li
+            a(href="./form") Form
+        li
+            a(href="./about") About
+
+
+    p
+        strong #{name}
+    p
+        strong #{email}
+    p
+        strong #{comments}
+    p
+        a(href="./form") Back
