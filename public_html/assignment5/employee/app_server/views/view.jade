@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    h1=title
+
+    p=removed
+    table.table.table-bordered.table-striped
+        thead   
+            tr
+                th First Name
+                th Last Name
+                th Edit
+                th Delete
+        tbody
+        - each person in employeeResults
+            tr
+                td 
+                    = person.firstName
+                td 
+                    = person.lastName
+                td 
+                    a(href="/update/" +person.id) 
+                       i.fa.fa-pencil-square-o 
+                td
+                    a(href="/delete/" +person.id)
+                        i.fa.fa-trash-o
+                        
